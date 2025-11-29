@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 from homework.src._internals.read_all_lines import read_all_lines
 
@@ -7,16 +8,16 @@ from ...wordcount import parse_args
 
 
 def test_parse_args():
+    """Llamada en el prompt:
+    $ python3 -m homework data/input/ data/output/
+    """
+    test_args = ["homework", "data/input/", "data/output/"]
+    sys.argv = test_args
 
-    result = subprocess.run(
-        ["python3", "-m", "homework", "data/input/", "data/output/"],
-        capture_output=True,
-        text=True,
-    )
+    input_folder, output_folder = parse_args()
 
-    assert result.returncode == 0
-    assert "input: data/input/" in result.stdout
-    assert "output: data/output/" in result.stdout
+    assert input_folder == test_args[1]
+    assert output_folder == test_args[2]
 
 
 # Función test_read_all_lines
